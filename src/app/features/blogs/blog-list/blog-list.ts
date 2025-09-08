@@ -1,8 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BlogService } from '../../../core/services/blog';
 import { Blog } from '../../../models/blog';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-blog-list',
@@ -11,11 +12,11 @@ import { Blog } from '../../../models/blog';
   templateUrl: './blog-list.html',
   styleUrls: ['./blog-list.scss']
 })
-export class BlogList implements OnInit {
+export class BlogList {
   private blogService = inject(BlogService);
-  blogs: Blog[] = [];
+  blogs$!: Observable<Blog[]>;
 
   ngOnInit() {
-    this.blogs = this.blogService.getAllBlogs();
+    this.blogs$ = this.blogService.getAllBlogs();
   }
 }

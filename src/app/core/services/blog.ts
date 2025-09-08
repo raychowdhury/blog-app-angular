@@ -1,147 +1,59 @@
-import { Injectable } from '@angular/core';
+// src/app/core/services/blog.service.ts
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map, of, tap } from 'rxjs';
 import { Blog } from '../../models/blog';
+import { ApiPost } from '../../models/api-post';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
+  private http = inject(HttpClient);
   private storageKey = 'blogapp/blogs';
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
-  constructor() {
-    this.seedBlogs();
-  }
-
+  // ✅ Utility: check if running in browser
   private isBrowser(): boolean {
     return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
   }
 
-  private seedBlogs() {
-    if (!this.isBrowser()) return;
-
-    const existing = localStorage.getItem(this.storageKey);
-    if (!existing) {
-      const demoBlogs: Blog[] = [
-        {
-          id: 1,
-          title: 'Getting Started with Angular',
-          excerpt: 'Learn the basics of Angular and why it’s so popular.',
-          content: 'Angular is a TypeScript-based framework developed by Google... (full content here).',
-          author: 'Admin',
+  // ✅ Fetch from API
+  fetchFromApi(): Observable<Blog[]> {
+    return this.http.get<ApiPost[]>(this.apiUrl).pipe(
+      map(posts =>
+        posts.slice(0, 12).map(post => ({
+          id: post.id,
+          title: post.title,
+          excerpt: post.body.substring(0, 100) + '...',
+          content: post.body,
+          author: `API User ${post.userId}`,
           publishDate: new Date(),
           date: new Date().toISOString()
-        },
-        {
-          id: 2,
-          title: 'Understanding TypeScript',
-          excerpt: 'Why Angular uses TypeScript and the benefits it brings.',
-          content: 'TypeScript adds strong typing, interfaces, and generics to JavaScript... (full content here).',
-          author: 'Ray',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 3,
-          title: 'Angular Components Explained',
-          excerpt: 'A deep dive into Angular’s component architecture.',
-          content: 'Components are the building blocks of Angular applications... (full content here).',
-          author: 'Admin',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 4,
-          title: 'Angular Routing Basics',
-          excerpt: 'Learn how Angular Router works to navigate between pages.',
-          content: 'Routing in Angular allows you to map URLs to components... (full content here).',
-          author: 'Sof',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 5,
-          title: 'Reactive Forms in Angular',
-          excerpt: 'Why Reactive Forms are powerful and how to use them.',
-          content: 'Reactive Forms give you full control of form validation and state... (full content here).',
-          author: 'Ray',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 6,
-          title: 'Angular Services & Dependency Injection',
-          excerpt: 'How Angular services share data and logic across components.',
-          content: 'Services in Angular are singletons injected into components... (full content here).',
-          author: 'Admin',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 7,
-          title: 'Using Angular Material',
-          excerpt: 'Make your Angular app look great with Material Design components.',
-          content: 'Angular Material provides a set of reusable UI components... (full content here).',
-          author: 'Ray',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 8,
-          title: 'State Management in Angular',
-          excerpt: 'Different approaches for managing state in Angular apps.',
-          content: 'State can be managed using services, RxJS, or libraries like NgRx... (full content here).',
-          author: 'Sof',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 9,
-          title: 'Angular Pipes Deep Dive',
-          excerpt: 'Learn how to transform data in templates with pipes.',
-          content: 'Pipes in Angular are simple functions to transform output in templates... (full content here).',
-          author: 'Admin',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 10,
-          title: 'Optimizing Angular Performance',
-          excerpt: 'Tips and tricks to make your Angular app faster.',
-          content: 'Use OnPush change detection, lazy loading, and trackBy in ngFor... (full content here).',
-          author: 'Ray',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 11,
-          title: 'Angular Testing with Jasmine & Karma',
-          excerpt: 'Write unit tests for your Angular components and services.',
-          content: 'Testing ensures that your Angular app is reliable and maintainable... (full content here).',
-          author: 'Admin',
-          publishDate: new Date(),
-          date: new Date().toISOString()
-        },
-        {
-          id: 12,
-          title: 'Deploying Angular Apps',
-          excerpt: 'How to deploy your Angular app to production.',
-          content: 'You can deploy Angular apps using Vercel, Netlify, Firebase, or traditional servers... (full content here).',
-          author: 'Sof',
-          publishDate: new Date(),
-          date: new Date().toISOString()
+        }) as Blog)
+      ),
+      tap(blogs => {
+        if (this.isBrowser()) {
+          localStorage.setItem(this.storageKey, JSON.stringify(blogs));
         }
-      ];
+      })
+    );
+  }
 
-      localStorage.setItem(this.storageKey, JSON.stringify(demoBlogs));
+  // ✅ Get blogs (first try localStorage, else API)
+  getAllBlogs(): Observable<Blog[]> {
+    if (this.isBrowser()) {
+      const stored = localStorage.getItem(this.storageKey);
+      if (stored) {
+        return of(JSON.parse(stored));
+      }
     }
+    return this.fetchFromApi();
   }
 
-  getAllBlogs(): Blog[] {
-    if (!this.isBrowser()) return [];
-    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-  }
-
-  getBlogById(id: number): Blog | undefined {
-    if (!this.isBrowser()) return undefined;
-    return this.getAllBlogs().find(b => b.id === id);
+  getBlogById(id: number): Observable<Blog | undefined> {
+    return this.getAllBlogs().pipe(
+      map(blogs => blogs.find(b => b.id === id))
+    );
   }
 }

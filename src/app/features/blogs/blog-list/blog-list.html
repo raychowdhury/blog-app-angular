@@ -2,15 +2,17 @@
   <h2 class="page-title">All Blogs</h2>
 
   <div class="blog-cards">
-    @for (blog of blogs; track blog.id) {
-      <div class="blog-card" [routerLink]="['/blogs', blog.id]">
-        <h3 class="blog-title">{{ blog.title }}</h3>
-        <p class="blog-excerpt">{{ blog.excerpt }}</p>
-        <div class="blog-meta">
-          <span>✍️ {{ blog.author }}</span>
-          <span>📅 {{ blog.publishDate | date:'mediumDate' }}</span>
+    @if (blogs$ | async; as blogs) {
+      @for (blog of blogs; track blog.id) {
+        <div class="blog-card" [routerLink]="['/blogs', blog.id]">
+          <h3 class="blog-title">{{ blog.title }}</h3>
+          <p class="blog-excerpt">{{ blog.excerpt }}</p>
+          <div class="blog-meta">
+            <span>✍️ {{ blog.author }}</span>
+            <span>📅 {{ blog.publishDate | date:'mediumDate' }}</span>
+          </div>
         </div>
-      </div>
+      }
     }
   </div>
 </div>
