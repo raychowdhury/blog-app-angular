@@ -1,1 +1,20 @@
-<p>blog-details works!</p>
+<!-- src/app/features/all-blogs/blog-details/blog-details.html -->
+<div class="blog-details" *ngIf="blog; else notFound">
+  <h1 class="title">{{ blog.title }}</h1>
+
+  <div class="meta">
+    <span>✍️ {{ blog.author }}</span>
+    <span>📅 {{ blog.publishDate | date:'mediumDate' }}</span>
+  </div>
+
+  <div class="content">
+    <p>{{ blog.content }}</p>
+  </div>
+
+  <a routerLink="/blogs" class="back-link">← Back to all blogs</a>
+</div>
+
+<ng-template #notFound>
+  <p>⚠️ Blog not found.</p>
+  <a routerLink="/blogs" class="back-link">← Back to all blogs</a>
+</ng-template>
