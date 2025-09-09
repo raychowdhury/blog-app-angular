@@ -4,11 +4,15 @@ import { BlogList } from './blog-list/blog-list';
 
 const routes: Routes = [
   { path: '', component: BlogList },
-  { path: ':id', loadComponent: () => import('./blog-details/blog-details').then(m => m.BlogDetails) }
+  {
+    path: ':id',
+    loadComponent: () =>
+      import('./blog-details/blog-details').then(m => m.BlogDetails),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BlogsRoutingModule {}   // 👈 this must exist
+export class AllBlogsRoutingModule {}

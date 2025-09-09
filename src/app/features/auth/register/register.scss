@@ -69,3 +69,64 @@
     }
   }
 }
+.register-form {
+  max-width: 550px;
+  margin: auto;
+  padding: 3rem;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.register-form .form-title {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0;
+  color: #333;
+}
+.register-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.register-form .form-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.register-form .form-input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  transition: border 0.2s ease;
+}
+.register-form .form-input:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+.register-form .form-error small {
+  color: #d32f2f;
+  font-size: 0.8rem;
+}
+.register-form .register-btn {
+  padding: 0.85rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.register-form .register-btn:hover:enabled {
+  background-color: #125a9c;
+}
+.register-form .register-btn:disabled {
+  background-color: #90caf9;
+  cursor: not-allowed;
+}/*# sourceMappingURL=register.css.map */
