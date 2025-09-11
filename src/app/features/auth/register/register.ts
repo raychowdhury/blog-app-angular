@@ -20,19 +20,17 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class Register {
   private snackBar = inject(MatSnackBar);
 
-  // ✅ Define form
   registerForm = new FormGroup({
     fullName: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
-      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z]).+$/) // must contain upper & lower
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z]).+$/)
     ]),
     confirmPassword: new FormControl('', [Validators.required])
-  }, { validators: Register.passwordMatchValidator }); 
+  }, { validators: Register.passwordMatchValidator });
 
-  // ✅ Cross-field validator
   static passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const form = control as FormGroup;
     const password = form.get('password')?.value;
@@ -40,41 +38,43 @@ export class Register {
     return password === confirm ? null : { passwordMismatch: true };
   }
 
-  // ✅ Form submission
- onSubmit() {
-  if (this.registerForm.valid) {
-    const formData = this.registerForm.value;
+  onSubmit() {
+    if (this.registerForm.valid) {
+      const formData = this.registerForm.value;
 
-    // 1️⃣ Load existing users array (or create empty one)
-    const users = JSON.parse(localStorage.getItem('blogapp/users') || '[]');
+      // 1️⃣ Load existing users
+      const users = JSON.parse(localStorage.getItem('blogapp/users') || '[]');
 
-    // 2️⃣ Remove confirmPassword before saving
-    const newUser = {
-      fullName: formData.fullName,
-      email: formData.email,
-      password: formData.password
-    };
+      // 2️⃣ Create new user with extra fields
+      const newUser = {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        joinDate: new Date().toISOString(),                 // 👈 auto add join date
+        profilePicture: 'https://via.placeholder.com/150'   // 👈 default pic
+      };
 
-    // 3️⃣ Add new user to array
-    users.push(newUser);
+      // 3️⃣ Save user
+      users.push(newUser);
+      localStorage.setItem('blogapp/users', JSON.stringify(users));
 
-    // 4️⃣ Save back to localStorage
-    localStorage.setItem('blogapp/users', JSON.stringify(users));
+      // 4️⃣ Also save to auth (auto login after register)
+      localStorage.setItem('blogapp/auth', JSON.stringify(newUser));
 
-    console.log("✅ User saved:", newUser);
+      console.log("✅ User saved:", newUser);
 
-    this.snackBar.open('Registration successful 🎉', 'Close', {
-      duration: 3000,
-      panelClass: ['success-snackbar']
-    });
+      this.snackBar.open('Registration successful 🎉', 'Close', {
+        duration: 3000,
+        panelClass: ['success-snackbar']
+      });
 
-    this.registerForm.reset();
-  } else {
-    this.registerForm.markAllAsTouched();
-    this.snackBar.open('Please fix the errors in the form ❌', 'Close', {
-      duration: 3000,
-      panelClass: ['error-snackbar']
-    });
+      this.registerForm.reset();
+    } else {
+      this.registerForm.markAllAsTouched();
+      this.snackBar.open('Please fix the errors in the form ❌', 'Close', {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+    }
   }
-}
 }

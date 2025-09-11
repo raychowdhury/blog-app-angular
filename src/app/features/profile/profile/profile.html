@@ -1,1 +1,16 @@
-<p>profile works!</p>
+<div class="profile">
+  <h2>My Profile</h2>
+
+  @if (user) {
+    <p><strong>Name:</strong> {{ user.fullName }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Joined:</strong> {{ joinDate }}</p>
+
+    <!-- Back Button -->
+    <div class="actions">
+      <button routerLink="/blog" class="btn-back">← Back to Blogs</button>
+    </div>
+  } @else {
+    <p>No user logged in.</p>
+  }
+</div>
