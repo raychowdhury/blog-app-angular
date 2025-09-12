@@ -1,27 +1,27 @@
-<nav class="navbar">
-  <h1 class="logo">BlogApp</h1>
-  <ul class="nav-links">
-    <li><a routerLink="/blogs">Blogs</a></li>
-    <li><a routerLink="/profile">My Profile</a></li>
-    <li><a routerLink="/login">Logout</a></li>
-  </ul>
-</nav>
+<div class="top-bar">
+  <div class="logo">BlogApp</div>
+  <div class="actions">
+    <button routerLink="/profile">
+      👤 Profile
+    </button>
+    <button (click)="logout()">
+      🚪 Logout
+    </button>
+  </div>
+</div>
 
 <div class="blog-list">
-  <h2 class="page-title">All Blogs</h2>
 
   <div class="blog-cards">
-    @if (blogs$ | async; as blogs) {
-      @for (blog of blogs; track blog.id) {
-        <div class="blog-card" [routerLink]="['/blogs', blog.id]">
-          <h3 class="blog-title">{{ blog.title }}</h3>
-          <p class="blog-excerpt">{{ blog.excerpt }}</p>
-          <div class="blog-meta">
-            <span>✍️ {{ blog.author }}</span>
-            <span>📅 {{ blog.publishDate | date:'mediumDate' }}</span>
-          </div>
+    @for (blog of blogs$ | async; track blog.id) {
+      <div class="blog-card" [routerLink]="['/blogs', blog.id]">
+        <h3 class="blog-title">{{ blog.title }}</h3>
+        <p class="blog-excerpt">{{ blog.excerpt }}</p>
+        <div class="blog-meta">
+          <span>✍️ {{ blog.author }}</span>
+          <span>📅 {{ blog.publishDate | date:'mediumDate' }}</span>
         </div>
-      }
+      </div>
     }
   </div>
 </div>

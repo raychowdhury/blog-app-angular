@@ -89,3 +89,39 @@
 .navbar .nav-links li a:hover {
   color: #bbdefb;
 }
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1976d2;
+  padding: 1rem 2rem;
+  color: white;
+
+  .logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+
+    button {
+      background: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #e3f2fd;
+      }
+    }
+  }
+}

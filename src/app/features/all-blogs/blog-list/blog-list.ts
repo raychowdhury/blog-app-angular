@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+// blog-list.ts
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BlogService } from '../../../core/services/blog';
@@ -12,11 +13,17 @@ import { Observable } from 'rxjs';
   templateUrl: './blog-list.html',
   styleUrls: ['./blog-list.scss']
 })
-export class BlogList {
+export class BlogList implements OnInit {
   private blogService = inject(BlogService);
-  blogs$!: Observable<Blog[]>;
+
+  blogs$!: Observable<Blog[]>;  // ✅ observable
 
   ngOnInit() {
     this.blogs$ = this.blogService.getAllBlogs();
+  }
+
+  logout() {
+    localStorage.removeItem('blogapp/auth');
+    window.location.href = '/login';
   }
 }
