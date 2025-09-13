@@ -1,51 +1,53 @@
 .profile {
   max-width: 500px;
-  margin: 3rem auto;
+  margin: 2rem auto;
   padding: 2rem;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: left;
-  font-family: Arial, sans-serif;
 
-  h2 {
-    text-align: center;
+  .profile-title {
     font-size: 1.8rem;
-    font-weight: 700;
+    font-weight: bold;
     margin-bottom: 1.5rem;
     color: #1976d2;
+    text-align: center;
   }
 
-  p {
-    font-size: 1rem;
-    margin: 0.8rem 0;
+  .profile-item {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
     color: #333;
 
     strong {
       color: #555;
-      font-weight: 600;
-      margin-right: 0.3rem;
     }
   }
 
-  .actions {
+  .profile-actions {
     margin-top: 2rem;
     text-align: center;
 
     .btn-back {
-      padding: 0.7rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      background: #1976d2;
       color: #fff;
-      background-color: #1976d2;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: background 0.2s ease;
+      font-size: 1rem;
+      transition: background 0.2s;
 
       &:hover {
-        background-color: #125a9c;
+        background: #1565c0;
       }
     }
+  }
+
+  .no-user {
+    color: #888;
+    font-style: italic;
+    text-align: center;
   }
 }
