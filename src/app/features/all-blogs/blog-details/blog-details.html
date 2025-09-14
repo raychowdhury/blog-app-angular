@@ -2,17 +2,18 @@
 
 <app-navbar></app-navbar>
 
-<div class="blog-details" *ngIf="blog$ | async as blog; else loading">
-  <h2 class="blog-title">{{ blog.title }}</h2>
-  <p class="blog-meta">
-    ✍️ {{ blog.author }} | 📅 {{ blog.publishDate | date:'mediumDate' }}
-  </p>
-  <p class="blog-content">{{ blog.content }}</p>
-  <div class="back-button">
-  <button routerLink="/blogs">⬅️ Back to Blogs</button>
-</div>
-</div>
+<div class="blog-details">
+  @if (blog$ | async; as blog) {
+    <h2 class="blog-title">{{ blog.title }}</h2>
+    <p class="blog-meta">
+      ✍️ {{ blog.author }} | 📅 {{ blog.publishDate | date:'mediumDate' }}
+    </p>
+    <p class="blog-content">{{ blog.content }}</p>
 
-<ng-template #loading>
-  <p>Loading blog...</p>
-</ng-template>
+    <div class="back-button">
+      <button routerLink="/blogs">⬅️ Back to Blogs</button>
+    </div>
+  } @else {
+    <p>Loading blog...</p>
+  }
+</div>

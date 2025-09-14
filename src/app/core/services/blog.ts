@@ -1,6 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+// src/app/core/services/blog.service.ts
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
+import { Observable, map, of } from 'rxjs';
 import { Blog } from '../../models/blog';
 import { ApiPost } from '../../models/api-post';
 
@@ -9,13 +11,24 @@ import { ApiPost } from '../../models/api-post';
 })
 export class BlogService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private platformId = inject(PLATFORM_ID);
 
-  // ✅ Always fetch directly from API
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private storageKey = 'blogapp/blogs';
+
+  private isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
+  }
+
+  /**  Fetch blogs (API + localStorage) */
   getAllBlogs(): Observable<Blog[]> {
+    if (!this.isBrowser()) return of([]);
+
+    const localBlogs: Blog[] = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+
     return this.http.get<ApiPost[]>(this.apiUrl).pipe(
-      map(posts =>
-        posts.slice(0, 12).map(post => ({
+      map(posts => {
+        const apiBlogs = posts.slice(0, 12).map(post => ({
           id: post.id,
           title: post.title,
           excerpt: post.body.substring(0, 100) + '...',
@@ -23,22 +36,42 @@ export class BlogService {
           author: `API User ${post.userId}`,
           publishDate: new Date(),
           date: new Date().toISOString(),
-        }) as Blog)
-      )
+        }) as Blog);
+
+        //  merge local blogs (user-created) with API blogs
+        return [...localBlogs, ...apiBlogs];
+      })
     );
   }
 
-  // ✅ Get one blog by ID
+  /**  Get single blog (check local first, then API) */
   getBlogById(id: number): Observable<Blog | undefined> {
-    return this.getAllBlogs().pipe(
-      map(blogs => blogs.find(b => b.id === id))
+    if (!this.isBrowser()) return of(undefined);
+
+    const localBlogs: Blog[] = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+    const localMatch = localBlogs.find(b => b.id === id);
+
+    if (localMatch) return of(localMatch);
+
+    return this.http.get<ApiPost>(`${this.apiUrl}/${id}`).pipe(
+      map(post => ({
+        id: post.id,
+        title: post.title,
+        excerpt: post.body.substring(0, 100) + '...',
+        content: post.body,
+        author: `API User ${post.userId}`,
+        publishDate: new Date(),
+        date: new Date().toISOString(),
+      }) as Blog)
     );
   }
 
-  addBlog(newBlog: Blog)  {
-    const blogs = JSON.parse(localStorage.getItem('blogapp/blogs') || '[]');
-    blogs.push(newBlog)
-    localStorage.setItem('blogapp/blogs', JSON.stringify(blogs));
+  /** Add new blog to localStorage */
+  addBlog(newBlog: Blog) {
+    if (!this.isBrowser()) return;
 
+    const blogs = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+    blogs.unshift(newBlog); // add to top
+    localStorage.setItem(this.storageKey, JSON.stringify(blogs));
   }
 }

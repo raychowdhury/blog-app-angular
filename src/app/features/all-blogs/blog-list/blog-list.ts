@@ -1,30 +1,25 @@
-// blog-list.ts
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { BlogService } from '../../../core/services/blog';
 import { Blog } from '../../../models/blog';
-import { Observable } from 'rxjs';
-import { Navbar } from "../../../shared/navbar/navbar";
+import { Navbar } from '../../../shared/navbar/navbar';
+import { RouterModule } from '@angular/router';  // 
 
 @Component({
   selector: 'app-blog-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, Navbar],
+  imports: [CommonModule,Navbar,RouterModule],
   templateUrl: './blog-list.html',
   styleUrls: ['./blog-list.scss']
 })
-export class BlogList implements OnInit {
+export class BlogList {
   private blogService = inject(BlogService);
-
-  blogs$!: Observable<Blog[]>;  // ✅ observable
+  blogs: Blog[] = [];
+  blogs$ = this.blogService.getAllBlogs();  // observable
 
   ngOnInit() {
-    this.blogs$ = this.blogService.getAllBlogs();
-  }
-
-  logout() {
-    localStorage.removeItem('blogapp/auth');
-    window.location.href = '/login';
+    this.blogService.getAllBlogs().subscribe(data => {
+      this.blogs = data;   // ✅ assign to blogs (array)
+    });
   }
 }
