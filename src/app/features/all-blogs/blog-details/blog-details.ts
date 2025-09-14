@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';   // ✅ import RouterModule
 import { AsyncPipe } from '@angular/common';
 import { BlogService } from '../../../core/services/blog';
+import { Navbar } from "../../../shared/navbar/navbar";
 
 @Component({
   selector: 'app-blog-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, AsyncPipe],  // ✅ RouterModule here
+  imports: [CommonModule, RouterModule, AsyncPipe, Navbar],  // ✅ RouterModule here
   templateUrl: './blog-details.html',
   styleUrls: ['./blog-details.scss']
 })

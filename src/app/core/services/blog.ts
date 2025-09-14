@@ -34,4 +34,11 @@ export class BlogService {
       map(blogs => blogs.find(b => b.id === id))
     );
   }
+
+  addBlog(newBlog: Blog)  {
+    const blogs = JSON.parse(localStorage.getItem('blogapp/blogs') || '[]');
+    blogs.push(newBlog)
+    localStorage.setItem('blogapp/blogs', JSON.stringify(blogs));
+
+  }
 }

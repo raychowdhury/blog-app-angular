@@ -16,6 +16,7 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/all-blogs/all-blogs-routing-module').then(m => m.ALL_BLOGS_ROUTES),
   },
+
   {
     path: 'profile',
     loadComponent: () =>

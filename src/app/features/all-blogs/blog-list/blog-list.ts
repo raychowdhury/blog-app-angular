@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { BlogService } from '../../../core/services/blog';
 import { Blog } from '../../../models/blog';
 import { Observable } from 'rxjs';
+import { Navbar } from "../../../shared/navbar/navbar";
 
 @Component({
   selector: 'app-blog-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, Navbar],
   templateUrl: './blog-list.html',
   styleUrls: ['./blog-list.scss']
 })

@@ -1,9 +1,16 @@
-// src/app/features/all-blogs/all-blogs.routes.ts
 import { Routes } from '@angular/router';
-import { BlogList } from './blog-list/blog-list';
 
 export const ALL_BLOGS_ROUTES: Routes = [
-  { path: '', component: BlogList },
+  {
+    path: '',
+    loadComponent: () =>
+      import('./blog-list/blog-list').then(m => m.BlogList),
+  },
+  {
+    path: 'create',
+    loadComponent: () =>
+      import('./blog-create/blog-create').then(m => m.BlogCreate),
+  },
   {
     path: ':id',
     loadComponent: () =>

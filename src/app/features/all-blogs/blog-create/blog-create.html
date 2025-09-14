@@ -1,0 +1,23 @@
+<app-navbar></app-navbar>
+<div class="blog-create">
+  <h2>Create New Blog</h2>
+
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <input formControlName="title" class="form-control" placeholder="Blog Title" />
+    </div>
+
+    <div class="form-group">
+      <textarea formControlName="content" class="form-control" placeholder="Blog Content"></textarea>
+    </div>
+
+    <div class="form-group">
+      <input formControlName="excerpt" class="form-control" placeholder="Excerpt (optional)" />
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-submit">Create Blog</button>
+      <button type="button" class="btn btn-cancel" routerLink="/blogs">Cancel</button>
+    </div>
+  </form>
+</div>
