@@ -4,11 +4,14 @@ import { BlogService } from '../../../core/services/blog';
 import { Blog } from '../../../models/blog';
 import { Navbar } from '../../../shared/navbar/navbar';
 import { RouterModule } from '@angular/router';  // 
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-blog-list',
   standalone: true,
-  imports: [CommonModule,Navbar,RouterModule],
+  imports: [CommonModule, Navbar, RouterModule, MatCardModule, MatIconModule, MatButtonModule],
   templateUrl: './blog-list.html',
   styleUrls: ['./blog-list.scss']
 })

@@ -1,32 +1,21 @@
 .navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: #1976d2;
-  padding: 1rem 2rem;
-  color: white;
+  padding: 0 16px;
 
   .logo {
-    font-size: 1.4rem;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
   }
 
   .actions {
     display: flex;
-    gap: 1rem;
-
-    button {
-      background: white;
-      color: #1976d2;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 500;
-
-      &:hover {
-        background: #bbdefb;
-      }
-    }
+    gap: 8px;
   }
 }

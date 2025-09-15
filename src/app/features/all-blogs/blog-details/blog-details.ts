@@ -3,11 +3,24 @@ import { CommonModule, AsyncPipe } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { BlogService } from '../../../core/services/blog';
 import { Navbar } from "../../../shared/navbar/navbar";
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-blog-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, AsyncPipe, Navbar],
+  imports: [
+    CommonModule,
+    RouterModule,
+    AsyncPipe,
+    Navbar,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDividerModule,
+  ],
   templateUrl: './blog-details.html',
   styleUrls: ['./blog-details.scss']
 })

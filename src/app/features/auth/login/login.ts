@@ -4,11 +4,26 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../../models/user.model';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, RouterModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    RouterModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
 })

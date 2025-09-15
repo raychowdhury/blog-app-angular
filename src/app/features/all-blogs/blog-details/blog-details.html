@@ -4,16 +4,34 @@
 
 <div class="blog-details">
   @if (blog$ | async; as blog) {
-    <h2 class="blog-title">{{ blog.title }}</h2>
-    <p class="blog-meta">
-      ✍️ {{ blog.author }} | 📅 {{ blog.publishDate | date:'mediumDate' }}
-    </p>
-    <p class="blog-content">{{ blog.content }}</p>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title class="blog-title">{{ blog.title }}</mat-card-title>
+        <mat-card-subtitle class="blog-meta">
+          <mat-icon inline>person</mat-icon>
+          {{ blog.author }}
+          &nbsp; • &nbsp;
+          <mat-icon inline>event</mat-icon>
+          {{ blog.publishDate | date:'mediumDate' }}
+        </mat-card-subtitle>
+      </mat-card-header>
 
-    <div class="back-button">
-      <button routerLink="/blogs">⬅️ Back to Blogs</button>
-    </div>
+      <mat-divider></mat-divider>
+
+      <mat-card-content>
+        <p class="blog-content">{{ blog.content }}</p>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-stroked-button color="primary" routerLink="/blogs">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Blogs
+        </button>
+      </mat-card-actions>
+    </mat-card>
   } @else {
-    <p>Loading blog...</p>
+    <mat-card>
+      <mat-card-content>Loading blog...</mat-card-content>
+    </mat-card>
   }
 </div>

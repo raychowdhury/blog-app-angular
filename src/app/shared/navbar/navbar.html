@@ -1,10 +1,29 @@
-<div class="navbar">
-  <div class="logo">BlogApp</div>
-  <div class="actions">
-    <button routerLink="/blogs">🏠 Blogs</button>
-    <button routerLink="/contact">📧 Contact</button>
-    <button routerLink="/profile">👤 Profile</button>
-    <button (click)="logout()">🚪 Logout</button>
-    <button routerLink="/blogs/create">➕ New Blog</button> 
+<mat-toolbar class="navbar" color="primary">
+  <div class="logo">
+    <mat-icon>article</mat-icon>
+    <span>BlogApp</span>
   </div>
-</div>
+  <span class="spacer"></span>
+  <div class="actions">
+    <button mat-button routerLink="/blogs">
+      <mat-icon>home</mat-icon>
+      Blogs
+    </button>
+    <button mat-button routerLink="/contact">
+      <mat-icon>mail</mat-icon>
+      Contact
+    </button>
+    <button mat-button routerLink="/profile">
+      <mat-icon>person</mat-icon>
+      Profile
+    </button>
+    <button mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+    <button mat-raised-button color="accent" routerLink="/blogs/create">
+      <mat-icon>add</mat-icon>
+      New Blog
+    </button>
+  </div>
+</mat-toolbar>

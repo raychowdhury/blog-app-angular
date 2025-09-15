@@ -1,23 +1,43 @@
 <app-navbar></app-navbar>
 <div class="blog-create">
-  <h2>Create New Blog</h2>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Create New Blog</mat-card-title>
+    </mat-card-header>
 
-  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <input formControlName="title" class="form-control" placeholder="Blog Title" />
-    </div>
+    <mat-card-content>
+      <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Blog Title</mat-label>
+          <mat-icon matPrefix>title</mat-icon>
+          <input matInput formControlName="title" placeholder="Blog Title" />
+          <mat-error>Title is required and must be at least 5 characters.</mat-error>
+        </mat-form-field>
 
-    <div class="form-group">
-      <textarea formControlName="content" class="form-control" placeholder="Blog Content"></textarea>
-    </div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Blog Content</mat-label>
+          <mat-icon matPrefix>description</mat-icon>
+          <textarea matInput formControlName="content" rows="8" placeholder="Blog Content"></textarea>
+          <mat-error>Content is required and must be at least 20 characters.</mat-error>
+        </mat-form-field>
 
-    <div class="form-group">
-      <input formControlName="excerpt" class="form-control" placeholder="Excerpt (optional)" />
-    </div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Excerpt (optional)</mat-label>
+          <mat-icon matPrefix>short_text</mat-icon>
+          <input matInput formControlName="excerpt" placeholder="Excerpt (optional)" />
+        </mat-form-field>
 
-    <div class="actions">
-      <button type="submit" class="btn btn-submit">Create Blog</button>
-      <button type="button" class="btn btn-cancel" routerLink="/blogs">Cancel</button>
-    </div>
-  </form>
+        <div class="actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="blogForm.invalid">
+            <mat-icon>check_circle</mat-icon>
+            Create Blog
+          </button>
+          <button mat-button type="button" routerLink="/blogs">
+            <mat-icon>cancel</mat-icon>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
