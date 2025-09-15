@@ -1,16 +1,24 @@
-import { Component,inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatSnackBarModule,MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { BlogService } from '../../../core/services/blog';
 import { Router, RouterModule } from '@angular/router';
 import { Blog } from '../../../models/blog';
 import { Navbar } from "../../../shared/navbar/navbar";
-
+import { MatCommonModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-blog-create',
-  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, Navbar,RouterModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatCommonModule,
+    Navbar,
+    RouterModule
+  ],
   templateUrl: './blog-create.html',
   styleUrl: './blog-create.scss'
 })

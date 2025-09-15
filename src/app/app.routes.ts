@@ -14,7 +14,7 @@ export const routes: Routes = [
   {
     path: 'blogs',
     loadChildren: () =>
-      import('./features/all-blogs/all-blogs-routing-module').then(m => m.ALL_BLOGS_ROUTES),
+      import('./features/all-blogs/all-blogs-module').then(m => m.AllBlogsModule),
   },
 
   {

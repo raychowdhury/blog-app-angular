@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-export const ALL_BLOGS_ROUTES: Routes = [
+
+export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
@@ -17,3 +20,10 @@ export const ALL_BLOGS_ROUTES: Routes = [
       import('./blog-details/blog-details').then(m => m.BlogDetails),
   },
 ];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+
+export class AllBlogsRoutingModule {}
