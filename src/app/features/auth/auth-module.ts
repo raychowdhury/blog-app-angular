@@ -4,12 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing-module';
 import { Register } from './register/register';
 
-
 @NgModule({
-  imports: [
-    CommonModule,
-    AuthRoutingModule,
-    Register
-  ]
+  imports: [CommonModule, AuthRoutingModule, Register],
 })
-export class AuthModule { }
+export class AuthModule {}

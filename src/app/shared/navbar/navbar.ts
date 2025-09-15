@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [CommonModule, RouterModule, MatToolbarModule, MatButtonModule, MatIconModule],
   templateUrl: './navbar.html',
-  styleUrls: ['./navbar.scss']
+  styleUrls: ['./navbar.scss'],
 })
 export class Navbar {
   logout() {

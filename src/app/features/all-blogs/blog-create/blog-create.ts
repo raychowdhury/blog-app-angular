@@ -5,7 +5,7 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { BlogService } from '../../../core/services/blog';
 import { Router, RouterModule } from '@angular/router';
 import { Blog } from '../../../models/blog';
-import { Navbar } from "../../../shared/navbar/navbar";
+import { Navbar } from '../../../shared/navbar/navbar';
 import { MatCommonModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,15 +27,12 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatIconModule,
     Navbar,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './blog-create.html',
-  styleUrl: './blog-create.scss'
+  styleUrl: './blog-create.scss',
 })
 export class BlogCreate {
-
-
-
   private blogService = inject(BlogService);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
@@ -51,10 +48,11 @@ export class BlogCreate {
         id: Date.now(),
         title: this.blogForm.value.title!,
         content: this.blogForm.value.content!,
-        excerpt: this.blogForm.value.excerpt || this.blogForm.value.content!.substring(0, 100) + '...',
-        author: 'Demo User',  // later replace with logged-in user
+        excerpt:
+          this.blogForm.value.excerpt || this.blogForm.value.content!.substring(0, 100) + '...',
+        author: 'Demo User', // later replace with logged-in user
         publishDate: new Date(),
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
       };
 
       this.blogService.addBlog(newBlog);
@@ -66,6 +64,4 @@ export class BlogCreate {
       this.snackBar.open('Please fill all fields ❌', 'Close', { duration: 3000 });
     }
   }
-
-
 }

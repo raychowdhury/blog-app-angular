@@ -7,7 +7,7 @@ import { Contact } from './contact/contact';
   imports: [
     CommonModule,
     ContactRoutingModule,
-    Contact // Import the standalone component
-  ]
+    Contact, // Import the standalone component
+  ],
 })
-export class ContactModule { }
+export class ContactModule {}

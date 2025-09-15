@@ -1,4 +1,4 @@
-import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { Component, inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
@@ -9,9 +9,9 @@ import { User } from '../../../models/user.model';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './profile.html',
-  styleUrls: ['./profile.scss']
+  styleUrls: ['./profile.scss'],
 })
-export class Profile {
+export class Profile implements OnInit {
   user: User | null = null;
   joinDate: string | null = null;
 

@@ -5,12 +5,12 @@ import { Contact } from './contact/contact';
 const routes: Routes = [
   {
     path: '',
-    component: Contact
-  }
+    component: Contact,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ContactRoutingModule { }
+export class ContactRoutingModule {}

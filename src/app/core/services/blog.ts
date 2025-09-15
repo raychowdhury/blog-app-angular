@@ -7,7 +7,7 @@ import { Blog } from '../../models/blog';
 import { ApiPost } from '../../models/api-post';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BlogService {
   private http = inject(HttpClient);
@@ -27,20 +27,23 @@ export class BlogService {
     const localBlogs: Blog[] = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
 
     return this.http.get<ApiPost[]>(this.apiUrl).pipe(
-      map(posts => {
-        const apiBlogs = posts.slice(0, 12).map(post => ({
-          id: post.id,
-          title: post.title,
-          excerpt: post.body.substring(0, 100) + '...',
-          content: post.body,
-          author: `API User ${post.userId}`,
-          publishDate: new Date(),
-          date: new Date().toISOString(),
-        }) as Blog);
+      map((posts) => {
+        const apiBlogs = posts.slice(0, 12).map(
+          (post) =>
+            ({
+              id: post.id,
+              title: post.title,
+              excerpt: post.body.substring(0, 100) + '...',
+              content: post.body,
+              author: `API User ${post.userId}`,
+              publishDate: new Date(),
+              date: new Date().toISOString(),
+            }) as Blog,
+        );
 
         //  merge local blogs (user-created) with API blogs
         return [...localBlogs, ...apiBlogs];
-      })
+      }),
     );
   }
 
@@ -49,20 +52,23 @@ export class BlogService {
     if (!this.isBrowser()) return of(undefined);
 
     const localBlogs: Blog[] = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-    const localMatch = localBlogs.find(b => b.id === id);
+    const localMatch = localBlogs.find((b) => b.id === id);
 
     if (localMatch) return of(localMatch);
 
     return this.http.get<ApiPost>(`${this.apiUrl}/${id}`).pipe(
-      map(post => ({
-        id: post.id,
-        title: post.title,
-        excerpt: post.body.substring(0, 100) + '...',
-        content: post.body,
-        author: `API User ${post.userId}`,
-        publishDate: new Date(),
-        date: new Date().toISOString(),
-      }) as Blog)
+      map(
+        (post) =>
+          ({
+            id: post.id,
+            title: post.title,
+            excerpt: post.body.substring(0, 100) + '...',
+            content: post.body,
+            author: `API User ${post.userId}`,
+            publishDate: new Date(),
+            date: new Date().toISOString(),
+          }) as Blog,
+      ),
     );
   }
 

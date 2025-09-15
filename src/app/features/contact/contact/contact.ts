@@ -22,10 +22,11 @@ import { Navbar } from '../../../shared/navbar/navbar';
     MatCardModule,
     MatIconModule,
     MatSnackBarModule,
-    RouterModule,Navbar
+    RouterModule,
+    Navbar,
   ],
   templateUrl: './contact.html',
-  styleUrl: './contact.scss'
+  styleUrl: './contact.scss',
 })
 export class Contact {
   private fb = inject(FormBuilder);
@@ -35,7 +36,7 @@ export class Contact {
     name: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
     subject: ['', [Validators.required, Validators.minLength(5)]],
-    message: ['', [Validators.required, Validators.minLength(20)]]
+    message: ['', [Validators.required, Validators.minLength(20)]],
   });
 
   get nameErrors() {
@@ -69,11 +70,11 @@ export class Contact {
   onSubmit() {
     if (this.contactForm.valid) {
       console.log(this.contactForm.value);
-      this.snackBar.open('Message sent successfully! We\'ll get back to you soon.', 'Close', {
+      this.snackBar.open("Message sent successfully! We'll get back to you soon.", 'Close', {
         duration: 5000,
         horizontalPosition: 'end',
         verticalPosition: 'top',
-        panelClass: ['success-snackbar']
+        panelClass: ['success-snackbar'],
       });
       this.contactForm.reset();
     } else {
@@ -81,9 +82,9 @@ export class Contact {
         duration: 5000,
         horizontalPosition: 'end',
         verticalPosition: 'top',
-        panelClass: ['error-snackbar']
+        panelClass: ['error-snackbar'],
       });
-      Object.keys(this.contactForm.controls).forEach(key => {
+      Object.keys(this.contactForm.controls).forEach((key) => {
         const control = this.contactForm.get(key);
         if (control?.invalid) {
           control.markAsTouched();
