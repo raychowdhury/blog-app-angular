@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <div class="blog-list">
   <div class="blog-cards">
-    @for (blog of blogs$ | async; track blog.id) {
+    @for (blog of pagedBlogs; track blog.id) {
       <mat-card class="blog-card" [routerLink]="['/blogs', blog.id]" appearance="outlined">
         <mat-card-header>
           <mat-card-title class="blog-title">{{ blog.title }}</mat-card-title>
@@ -22,4 +22,11 @@
       </mat-card>
     }
   </div>
+  <mat-paginator
+    [length]="blogs.length"
+    [pageIndex]="pageIndex"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[6, 12, 24]"
+    (page)="onPageChange($event)"
+  />
 </div>

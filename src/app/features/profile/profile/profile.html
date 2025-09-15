@@ -1,16 +1,29 @@
 <div class="profile">
-  <h2 class="profile-title">My Profile</h2>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="profile-title">
+        <mat-icon>person</mat-icon>
+        My Profile
+      </mat-card-title>
+    </mat-card-header>
 
-  @if (user) {
-    <p class="profile-item"><strong>Name:</strong> {{ user.fullName }}</p>
-    <p class="profile-item"><strong>Email:</strong> {{ user.email }}</p>
-    <p class="profile-item"><strong>Joined:</strong> {{ joinDate }}</p>
+    @if (user) {
+      <mat-card-content>
+        <p class="profile-item"><strong>Name:</strong> {{ user.fullName }}</p>
+        <p class="profile-item"><strong>Email:</strong> {{ user.email }}</p>
+        <p class="profile-item"><strong>Joined:</strong> {{ joinDate }}</p>
+      </mat-card-content>
 
-    <!-- Back Button -->
-    <div class="profile-actions">
-      <button routerLink="/blogs" class="btn-back">← Back to Blogs</button>
-    </div>
-  } @else {
-    <p class="no-user">No user logged in.</p>
-  }
+      <mat-card-actions align="end">
+        <button mat-stroked-button color="primary" routerLink="/blogs">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Blogs
+        </button>
+      </mat-card-actions>
+    } @else {
+      <mat-card-content>
+        <p class="no-user">No user logged in.</p>
+      </mat-card-content>
+    }
+  </mat-card>
 </div>

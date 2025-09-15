@@ -12,6 +12,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { BlogCreateSuccessDialog } from './blog-create-success-dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-blog-create',
@@ -26,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
     Navbar,
     RouterModule,
   ],
@@ -36,6 +39,7 @@ export class BlogCreate {
   private blogService = inject(BlogService);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
 
   blogForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -57,8 +61,18 @@ export class BlogCreate {
 
       this.blogService.addBlog(newBlog);
 
-      this.snackBar.open('Blog created successfully 🎉', 'Close', { duration: 3000 });
-      this.router.navigate(['/blogs']);
+      const ref = this.dialog.open(BlogCreateSuccessDialog, {
+        disableClose: true,
+        data: { title: newBlog.title },
+      });
+
+      ref.afterClosed().subscribe((action: 'go' | 'new' | undefined) => {
+        if (action === 'go') {
+          this.router.navigate(['/blogs']);
+        } else {
+          this.blogForm.reset();
+        }
+      });
     } else {
       this.blogForm.markAllAsTouched();
       this.snackBar.open('Please fill all fields ❌', 'Close', { duration: 3000 });
