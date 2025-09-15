@@ -22,6 +22,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/profile/profile/profile').then(m => m.Profile),
   },
+  {
+    path: 'contact',
+    loadChildren: () =>
+      import('./features/contact/contact-module').then(m => m.ContactModule),
+  },
   { path: '', redirectTo: 'blogs', pathMatch: 'full' },
   { path: '**', redirectTo: 'blogs' },
 ];

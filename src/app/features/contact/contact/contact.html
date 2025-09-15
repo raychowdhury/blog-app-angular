@@ -1,1 +1,54 @@
-<p>contact works!</p>
+<app-navbar></app-navbar>
+<div class="contact-page">
+  <mat-card class="contact-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>contact_mail</mat-icon>
+        Contact Us
+      </mat-card-title>
+      <mat-card-subtitle>
+        We'd love to hear from you! Fill out the form below and we'll get back to you as soon as possible.
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput formControlName="name" placeholder="Your full name">
+          <mat-error>{{nameErrors}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <mat-icon matPrefix>email</mat-icon>
+          <input matInput formControlName="email" placeholder="your.email@example.com" type="email">
+          <mat-error>{{emailErrors}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Subject</mat-label>
+          <mat-icon matPrefix>subject</mat-icon>
+          <input matInput formControlName="subject" placeholder="What's this about?">
+          <mat-error>{{subjectErrors}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Message</mat-label>
+          <mat-icon matPrefix>message</mat-icon>
+          <textarea matInput formControlName="message" 
+                    placeholder="Write your message here..."
+                    rows="6"></textarea>
+          <mat-error>{{messageErrors}}</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" 
+                [disabled]="contactForm.invalid || contactForm.pending">
+          <mat-icon>send</mat-icon>
+          Send Message
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
